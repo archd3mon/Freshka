@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freshka Naturals | Premium Wholesale</title>
+    
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#064e3b', // Deep Emerald
+                            main: '#10b981', // Fresh Green
+                            light: '#d1fae5',
+                            cream: '#fcfbf9', // Premium Background
+                            gold: '#d4af37'   // Luxury accent
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { background-color: #fcfbf9; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        // --- DATA SOURCE (From your CSV) ---
+        const RAW_DATA = [
+            {
+                category: "Exotic Vegetables",
+                items: [
+                    { name: "Broccoli", price: 80, unit: "kg", img: "https://images.unsplash.com/photo-1583663848850-46af132dc08e?w=500&q=80" },
+                    { name: "Zucchini (Green/Yellow)", price: 80, unit: "kg", img: "https://images.unsplash.com/photo-1590820204872-81f26f78f825?w=500&q=80" },
+                    { name: "Red / Yellow Capsicum", price: 130, unit: "kg", img: "https://images.unsplash.com/photo-1563565375-f3fdf5dbc240?w=500&q=80" },
+                    { name: "Lettuce (Iceberg)", price: 120, unit: "kg", img: "https://images.unsplash.com/photo-1622206151226-18ca0c960306?w=500&q=80" },
+                    { name: "Asparagus", price: 1500, unit: "kg", img: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80" },
+                    { name: "Avocado", price: 120, unit: "pc", img: "https://images.unsplash.com/photo-1523049673856-3843510d22ce?w=500&q=80" },
+                    { name: "Cherry Tomatoes", price: 220, unit: "kg", img: "https://images.unsplash.com/photo-1561136594-7f68413baa99?w=500&q=80" },
+                    { name: "Baby Corn", price: 140, unit: "kg", img: "https://images.unsplash.com/photo-1554341994-1a96c342754f?w=500&q=80" },
+                    { name: "Mushroom", price: 150, unit: "kg", img: "https://images.unsplash.com/photo-1504442654992-0402b8a07119?w=500&q=80" }
+                ]
+            },
+            {
+                category: "Local Fruits",
+                items: [
+                    { name: "Banana", price: 60, unit: "Dozen", img: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=500&q=80" },
+                    { name: "Papaya", price: 40, unit: "kg", img: "https://images.unsplash.com/photo-1617117833203-c91b48e0c8b0?w=500&q=80" },
+                    { name: "Watermelon", price: 50, unit: "kg", img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&q=80" },
+                    { name: "Pineapple", price: 90, unit: "kg", img: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=500&q=80" },
+                    { name: "Pomegranate", price: 220, unit: "kg", img: "https://images.unsplash.com/photo-1615485500704-8e99099928b3?w=500&q=80" },
+                    { name: "Orange (Nagpur)", price: 100, unit: "kg", img: "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=500&q=80" },
+                    { name: "Coconut", price: 40, unit: "kg", img: "https://images.unsplash.com/photo-1533601017-dc61895e03c0?w=500&q=80" },
+                    { name: "Lemons", price: 70, unit: "kg", img: "https://images.unsplash.com/photo-1595475207225-428b62bda831?w=500&q=80" }
+                ]
+            },
+            {
+                category: "Imported Fruits",
+                items: [
+                    { name: "Blueberries", price: 250, unit: "pkt", img: "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=500&q=80" },
+                    { name: "Strawberries", price: 60, unit: "pkt", img: "https://images.unsplash.com/photo-1464965911861-746a04b4b0ae?w=500&q=80" },
+                    { name: "Avocado (Hass)", price: 100, unit: "pc", img: "https://images.unsplash.com/photo-1601039641847-7857b994d704?w=500&q=80" },
+                    { name: "Kiwi (NZ)", price: 300, unit: "kg", img: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=500&q=80" },
+                    { name: "Apples (Washington)", price: 230, unit: "kg", img: "https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?w=500&q=80" },
+                    { name: "Dragon Fruit", price: 60, unit: "pc", img: "https://images.unsplash.com/photo-1527325678964-54921661f888?w=500&q=80" }
+                ]
+            },
+            {
+                category: "Daily Vegetables",
+                items: [
+                    { name: "Potato", price: 16, unit: "kg", img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80" },
+                    { name: "Onion", price: 20, unit: "kg", img: "https://images.unsplash.com/photo-1508747703725-7197c963bcb6?w=500&q=80" },
+                    { name: "Tomato", price: 50, unit: "kg", img: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&q=80" },
+                    { name: "Carrot", price: 35, unit: "kg", img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=500&q=80" },
+                    { name: "Cauliflower", price: 30, unit: "kg", img: "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=500&q=80" },
+                    { name: "Spinach", price: 30, unit: "kg", img: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&q=80" },
+                    { name: "Ginger", price: 80, unit: "kg", img: "https://images.unsplash.com/photo-1615485290382-441e4d04fcad?w=500&q=80" },
+                    { name: "Garlic", price: 120, unit: "kg", img: "https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=500&q=80" }
+                ]
+            }
+        ];
+
+        // --- COMPONENTS ---
+
+        const Header = ({ cartCount, setIsCartOpen }) => (
+            <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all duration-300">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-center h-20">
+                        {/* Logo Area */}
+                        <div className="flex items-center">
+                            <div className="flex-shrink-0 flex items-center gap-3">
+                                <div className="h-10 w-10 bg-brand-dark rounded-full flex items-center justify-center text-white">
+                                    <i className="fa-solid fa-leaf text-xl"></i>
+                                </div>
+                                <div>
+                                    <h1 className="font-serif text-2xl font-bold text-brand-dark tracking-tight">Freshka</h1>
+                                    <p className="text-[10px] uppercase tracking-widest text-gray-500 font-sans">Naturals Wholesale</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Desktop Search - Hidden on small mobile */}
+                        <div className="hidden md:flex flex-1 mx-12">
+                            <div className="relative w-full max-w-md mx-auto">
+                                <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                                    <i className="fa-solid fa-magnifying-glass"></i>
+                                </span>
+                                <input 
+                                    className="block w-full pl-10 pr-3 py-2 border-b-2 border-gray-100 bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:border-brand-dark focus:ring-0 sm:text-sm transition-colors" 
+                                    placeholder="Search for 'Avocado'..." 
+                                />
+                            </div>
+                        </div>
+
+                        {/* Cart Icon */}
+                        <div className="flex items-center cursor-pointer" onClick={() => setIsCartOpen(true)}>
+                            <div className="relative p-2">
+                                <i className="fa-solid fa-basket-shopping text-2xl text-brand-dark"></i>
+                                {cartCount > 0 && (
+                                    <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-600 rounded-full">
+                                        {cartCount}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        );
+
+        const Hero = () => (
+            <div className="relative bg-brand-dark overflow-hidden">
+                <div className="absolute inset-0">
+                    <img className="w-full h-full object-cover opacity-30" src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1920&auto=format&fit=crop" alt="Fresh Vegetables" />
+                </div>
+                <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+                    <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4 shadow-sm">
+                        Premium Quality, <br/><span className="italic text-brand-light">Delivered Fresh</span>
+                    </h2>
+                    <p className="mt-2 text-xl text-brand-cream max-w-2xl font-light">
+                        Experience the finest selection of exotic vegetables and imported fruits, curated for wholesale excellence.
+                    </p>
+                </div>
+            </div>
+        );
+
+        const CategoryPills = ({ categories, activeCategory, setActiveCategory }) => (
+            <div className="sticky top-20 z-40 bg-brand-cream/95 backdrop-blur py-4 border-b border-gray-100">
+                <div className="max-w-7xl mx-auto px-4 overflow-x-auto hide-scrollbar">
+                    <div className="flex space-x-4">
+                        <button 
+                            onClick={() => setActiveCategory('All')}
+                            className={`px-6 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-300 ${activeCategory === 'All' ? 'bg-brand-dark text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-dark'}`}
+                        >
+                            All
+                        </button>
+                        {categories.map((cat, idx) => (
+                            <button 
+                                key={idx} 
+                                onClick={() => setActiveCategory(cat.category)}
+                                className={`whitespace-nowrap px-6 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-300 ${activeCategory === cat.category ? 'bg-brand-dark text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-dark'}`}
+                            >
+                                {cat.category}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+
+        const ProductCard = ({ item, addToCart, removeFromCart, qty }) => (
+            <div className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100 overflow-hidden flex flex-col h-full fade-in">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                    <img 
+                        src={item.img} 
+                        alt={item.name} 
+                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                        loading="lazy"
+                    />
+                    <div className="absolute top-2 right-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-[10px] font-bold tracking-widest uppercase">
+                        Fresh
+                    </div>
+                </div>
+                
+                <div className="p-4 flex flex-col flex-grow">
+                    <div className="flex justify-between items-start mb-2">
+                        <h3 className="font-serif text-lg font-bold text-gray-900 leading-tight group-hover:text-brand-dark transition-colors">{item.name}</h3>
+                    </div>
+                    
+                    <p className="text-gray-500 text-xs uppercase tracking-wide mb-4">{item.unit}</p>
+                    
+                    <div className="mt-auto flex items-center justify-between">
+                        <span className="text-lg font-bold text-gray-900">₹{item.price}</span>
+                        
+                        {qty === 0 ? (
+                            <button 
+                                onClick={() => addToCart(item)}
+                                className="w-24 bg-white border border-gray-300 text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-brand-dark hover:text-white hover:border-transparent transition-all"
+                            >
+                                Add +
+                            </button>
+                        ) : (
+                            <div className="flex items-center border border-brand-dark rounded-lg overflow-hidden w-24">
+                                <button onClick={() => removeFromCart(item)} className="w-1/3 bg-brand-light text-brand-dark py-1.5 hover:bg-brand-main hover:text-white transition-colors">-</button>
+                                <span className="w-1/3 text-center text-xs font-bold text-brand-dark">{qty}</span>
+                                <button onClick={() => addToCart(item)} className="w-1/3 bg-brand-dark text-white py-1.5 hover:bg-brand-main transition-colors">+</button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+
+        const CartDrawer = ({ isOpen, onClose, cart, updateQty }) => {
+            const total = Object.values(cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
+            
+            const handleCheckout = () => {
+                const phone = "919971976339"; // REPLACE WITH YOUR NUMBER
+                let msg = "Hello Freshka Naturals, I would like to place an order:%0a%0a";
+                Object.values(cart).forEach(item => {
+                    msg += `▪️ ${item.name} x ${item.qty} (${item.unit}) - ₹${item.price * item.qty}%0a`;
+                });
+                msg += `%0a*Total Estimate: ₹${total}*`;
+                window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+            };
+
+            return (
+                <div className={`fixed inset-0 z-[60] transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out`}>
+                    {/* Backdrop */}
+                    <div className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity ${isOpen ? 'opacity-100' : 'opacity-0'}`} onClick={onClose}></div>
+                    
+                    {/* Drawer */}
+                    <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col">
+                        <div className="p-6 bg-brand-cream border-b border-gray-100 flex justify-between items-center">
+                            <h2 className="font-serif text-2xl font-bold text-brand-dark">Your Cart</h2>
+                            <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors">
+                                <i className="fa-solid fa-xmark text-2xl"></i>
+                            </button>
+                        </div>
+                        
+                        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                            {Object.keys(cart).length === 0 ? (
+                                <div className="text-center py-20 text-gray-400">
+                                    <i className="fa-solid fa-basket-shopping text-4xl mb-4 opacity-50"></i>
+                                    <p>Your basket is empty</p>
+                                </div>
+                            ) : (
+                                Object.values(cart).map(item => (
+                                    <div key={item.name} className="flex items-center gap-4">
+                                        <div className="h-16 w-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src={item.img} alt={item.name} className="h-full w-full object-cover" />
+                                        </div>
+                                        <div className="flex-1">
+                                            <h4 className="font-serif font-bold text-gray-900">{item.name}</h4>
+                                            <p className="text-xs text-gray-500">₹{item.price} / {item.unit}</p>
+                                        </div>
+                                        <div className="flex items-center border border-gray-200 rounded-lg">
+                                            <button onClick={() => updateQty(item.name, -1)} className="px-3 py-1 text-gray-500 hover:text-brand-dark hover:bg-gray-50">-</button>
+                                            <span className="px-2 text-sm font-bold">{item.qty}</span>
+                                            <button onClick={() => updateQty(item.name, 1)} className="px-3 py-1 text-gray-500 hover:text-brand-dark hover:bg-gray-50">+</button>
+                                        </div>
+                                        <div className="w-16 text-right font-bold text-gray-900">
+                                            ₹{item.price * item.qty}
+                                        </div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                        
+                        {Object.keys(cart).length > 0 && (
+                            <div className="p-6 bg-brand-cream border-t border-gray-100">
+                                <div className="flex justify-between items-center mb-6">
+                                    <span className="text-gray-600">Subtotal</span>
+                                    <span className="text-2xl font-serif font-bold text-brand-dark">₹{total}</span>
+                                </div>
+                                <button onClick={handleCheckout} className="w-full bg-brand-dark text-white py-4 rounded-xl font-bold uppercase tracking-widest shadow-lg hover:bg-brand-main transition-all flex justify-center items-center gap-2">
+                                    Order on WhatsApp <i className="fa-brands fa-whatsapp text-xl"></i>
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [activeCategory, setActiveCategory] = useState('All');
+            const [cart, setCart] = useState({}); // { "ItemName": { ...item, qty: 1 } }
+            const [isCartOpen, setIsCartOpen] = useState(false);
+
+            const addToCart = (item) => {
+                setCart(prev => {
+                    const existing = prev[item.name];
+                    return {
+                        ...prev,
+                        [item.name]: { ...item, qty: (existing ? existing.qty : 0) + 1 }
+                    };
+                });
+            };
+
+            const removeFromCart = (item) => {
+                setCart(prev => {
+                    const existing = prev[item.name];
+                    if (!existing) return prev;
+                    if (existing.qty === 1) {
+                        const copy = { ...prev };
+                        delete copy[item.name];
+                        return copy;
+                    }
+                    return {
+                        ...prev,
+                        [item.name]: { ...existing, qty: existing.qty - 1 }
+                    };
+                });
+            };
+
+            const updateQty = (name, delta) => {
+                setCart(prev => {
+                    const existing = prev[name];
+                    if (!existing) return prev;
+                    const newQty = existing.qty + delta;
+                    if (newQty <= 0) {
+                        const copy = { ...prev };
+                        delete copy[name];
+                        return copy;
+                    }
+                    return {
+                        ...prev,
+                        [name]: { ...existing, qty: newQty }
+                    };
+                });
+            };
+
+            const filteredItems = useMemo(() => {
+                if (activeCategory === 'All') {
+                    return RAW_DATA.flatMap(cat => cat.items);
+                }
+                const cat = RAW_DATA.find(c => c.category === activeCategory);
+                return cat ? cat.items : [];
+            }, [activeCategory]);
+
+            return (
+                <div className="min-h-screen pb-12">
+                    <Header cartCount={Object.keys(cart).length} setIsCartOpen={setIsCartOpen} />
+                    <Hero />
+                    
+                    <CategoryPills 
+                        categories={RAW_DATA} 
+                        activeCategory={activeCategory} 
+                        setActiveCategory={setActiveCategory} 
+                    />
+
+                    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+                        <div className="flex items-end justify-between mb-6">
+                            <h3 className="font-serif text-2xl font-bold text-gray-900">{activeCategory === 'All' ? 'Full Catalogue' : activeCategory}</h3>
+                            <span className="text-sm text-gray-500">{filteredItems.length} Products</span>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                            {filteredItems.map(item => (
+                                <ProductCard 
+                                    key={item.name} 
+                                    item={item} 
+                                    addToCart={addToCart} 
+                                    removeFromCart={removeFromCart} 
+                                    qty={cart[item.name]?.qty || 0}
+                                />
+                            ))}
+                        </div>
+                    </main>
+
+                    <CartDrawer 
+                        isOpen={isCartOpen} 
+                        onClose={() => setIsCartOpen(false)} 
+                        cart={cart}
+                        updateQty={updateQty}
+                    />
+                    
+                    <footer className="mt-20 border-t border-gray-200 bg-white py-12">
+                        <div className="max-w-7xl mx-auto px-4 text-center">
+                            <i className="fa-solid fa-leaf text-brand-dark text-3xl mb-4"></i>
+                            <p className="text-gray-500 font-serif">Freshka Naturals Wholesale</p>
+                            <p className="text-xs text-gray-400 mt-2">Premium produce for premium clients.</p>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
