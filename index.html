@@ -310,10 +310,18 @@
             );
         };
 
-        const App = () => {
-            const [activeCategory, setActiveCategory] = useState('All');
-            const [cart, setCart] = useState({}); // { "ItemName": { ...item, qty: 1 } }
-            const [isCartOpen, setIsCartOpen] = useState(false);
+                const App = () => {
+                const [activeCategory, setActiveCategory] = useState('All');
+                const [cart, setCart] = useState(() => {
+                    try {
+                    return JSON.parse(localStorage.getItem('freshka_cart') || '{}');
+                    } catch { return {}; }
+                });
+                const [isCartOpen, setIsCartOpen] = useState(false);
+
+                useEffect(() => {
+                    localStorage.setItem('freshka_cart', JSON.stringify(cart));
+                }, [cart]);
 
             const addToCart = (item) => {
                 setCart(prev => {
