@@ -52,60 +52,14 @@
     <script type="text/babel">
         const { useState, useEffect, useMemo } = React;
 
-        // --- DATA SOURCE (From your CSV) ---
-        const RAW_DATA = [
-            {
-                category: "Exotic Vegetables",
-                items: [
-                    { name: "Broccoli", price: 80, unit: "kg", img: "images/broccoli.jpg" },
-                    { name: "Zucchini (Green/Yellow)", price: 80, unit: "kg", img: "images/zucchini.jpg" },
-                    { name: "Red / Yellow Capsicum", price: 130, unit: "kg", img: "images/capsicum.jpg" },
-                    { name: "Lettuce (Iceberg)", price: 120, unit: "kg", img: "images/lettuce.jpg" },
-                    { name: "Asparagus", price: 1500, unit: "kg", img: "images/asparagus.jpg" },
-                    { name: "Avocado", price: 120, unit: "pc", img: "images/avocado.jpg" },
-                    { name: "Cherry Tomatoes", price: 220, unit: "kg", img: "images/cherrytomato.jpg" },
-                    { name: "Baby Corn", price: 140, unit: "kg", img: "images/babycorn.jpg" },
-                    { name: "Mushroom", price: 150, unit: "kg", img: "images/mushrooms.jpg" }
-                ]
-            },
-            {
-                category: "Local Fruits",
-                items: [
-                    { name: "Banana", price: 60, unit: "Dozen", img: "images/banana.jpg" },
-                    { name: "Papaya", price: 40, unit: "kg", img: "images/papaya.jpg" },
-                    { name: "Watermelon", price: 50, unit: "kg", img: "images/watermelon.jpg" },
-                    { name: "Pineapple", price: 90, unit: "kg", img: "images/pineapple.jpg" },
-                    { name: "Pomegranate", price: 220, unit: "kg", img: "images/pomegranate.jpg" },
-                    { name: "Orange (Nagpur)", price: 100, unit: "kg", img: "images/orange.jpeg" },
-                    { name: "Coconut", price: 40, unit: "kg", img: "images/coconut.jpg" },
-                    { name: "Lemons", price: 70, unit: "kg", img: "images/lemon.jpg" }
-                ]
-            },
-            {
-                category: "Imported Fruits",
-                items: [
-                    { name: "Blueberries", price: 250, unit: "pkt", img: "images/blueberry.jpg" },
-                    { name: "Strawberries", price: 60, unit: "pkt", img: "images/strawberry.jpg" },
-                    { name: "Avocado (Hass)", price: 100, unit: "pc", img: "images/hass.jpg" },
-                    { name: "Kiwi (NZ)", price: 300, unit: "kg", img: "images/kiwi.jpg" },
-                    { name: "Apples (Washington)", price: 230, unit: "kg", img: "images/apples.jpg" },
-                    { name: "Dragon Fruit", price: 60, unit: "pc", img: "images/dragon.jpg" }
-                ]
-            },
-            {
-                category: "Daily Vegetables",
-                items: [
-                    { name: "Potato", price: 16, unit: "kg", img: "images/potato.jpg" },
-                    { name: "Onion", price: 20, unit: "kg", img: "images/onions.jpg" },
-                    { name: "Tomato", price: 50, unit: "kg", img: "images/tomato.jpg" },
-                    { name: "Carrot", price: 35, unit: "kg", img: "images/carrot.jpg" },
-                    { name: "Cauliflower", price: 30, unit: "kg", img: "images/cauliflower.jpg" },
-                    { name: "Spinach", price: 30, unit: "kg", img: "images/spinach.jpg" },
-                    { name: "Ginger", price: 80, unit: "kg", img: "images/ginger.jpg" },
-                    { name: "Garlic", price: 120, unit: "kg", img: "images/garlic.jpg" }
-                ]
-            }
-        ];
+        const [RAW_DATA, setRAW_DATA] = useState([]);
+
+useEffect(() => {
+    fetch('/api/products')
+        .then(res => res.json())
+        .then(data => setRAW_DATA(data))
+        .catch(err => console.error('Error loading products:', err));
+}, []);
 
         // --- COMPONENTS ---
 

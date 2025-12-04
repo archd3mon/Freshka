@@ -1,0 +1,270 @@
+[
+  {
+    "category": "Exotic Vegetables",
+    "items": [
+      {
+        "id": "EV001",
+        "name": "Broccoli",
+        "price": 80,
+        "unit": "kg",
+        "img": "images/broccoli.jpg",
+        "inStock": true
+      },
+      {
+        "id": "EV002",
+        "name": "Zucchini (Green/Yellow)",
+        "price": 80,
+        "unit": "kg",
+        "img": "images/zucchini.jpg",
+        "inStock": true
+      },
+      {
+        "id": "EV003",
+        "name": "Red / Yellow Capsicum",
+        "price": 130,
+        "unit": "kg",
+        "img": "images/capsicum.jpg",
+        "inStock": true
+      },
+      {
+        "id": "EV004",
+        "name": "Lettuce (Iceberg)",
+        "price": 120,
+        "unit": "kg",
+        "img": "images/lettuce.jpg",
+        "inStock": true
+      },
+      {
+        "id": "EV005",
+        "name": "Asparagus",
+        "price": 1500,
+        "unit": "kg",
+        "img": "images/asparagus.jpg",
+        "inStock": true
+      },
+      {
+        "id": "EV006",
+        "name": "Avocado",
+        "price": 120,
+        "unit": "pc",
+        "img": "images/avocado.jpg",
+        "inStock": true
+      },
+      {
+        "id": "EV007",
+        "name": "Cherry Tomatoes",
+        "price": 220,
+        "unit": "kg",
+        "img": "images/cherrytomato.jpg",
+        "inStock": true
+      },
+      {
+        "id": "EV008",
+        "name": "Baby Corn",
+        "price": 140,
+        "unit": "kg",
+        "img": "images/babycorn.jpg",
+        "inStock": true
+      },
+      {
+        "id": "EV009",
+        "name": "Mushroom",
+        "price": 150,
+        "unit": "kg",
+        "img": "images/mushrooms.jpg",
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "category": "Local Fruits",
+    "items": [
+      {
+        "id": "LF001",
+        "name": "Banana",
+        "price": 60,
+        "unit": "Dozen",
+        "img": "images/banana.jpg",
+        "inStock": true
+      },
+      {
+        "id": "LF002",
+        "name": "Papaya",
+        "price": 40,
+        "unit": "kg",
+        "img": "images/papaya.jpg",
+        "inStock": true
+      },
+      {
+        "id": "LF003",
+        "name": "Watermelon",
+        "price": 50,
+        "unit": "kg",
+        "img": "images/watermelon.jpg",
+        "inStock": true
+      },
+      {
+        "id": "LF004",
+        "name": "Pineapple",
+        "price": 90,
+        "unit": "kg",
+        "img": "images/pineapple.jpg",
+        "inStock": true
+      },
+      {
+        "id": "LF005",
+        "name": "Pomegranate",
+        "price": 220,
+        "unit": "kg",
+        "img": "images/pomegranate.jpg",
+        "inStock": true
+      },
+      {
+        "id": "LF006",
+        "name": "Orange (Nagpur)",
+        "price": 100,
+        "unit": "kg",
+        "img": "images/orange.jpeg",
+        "inStock": true
+      },
+      {
+        "id": "LF007",
+        "name": "Coconut",
+        "price": 40,
+        "unit": "kg",
+        "img": "images/coconut.jpg",
+        "inStock": true
+      },
+      {
+        "id": "LF008",
+        "name": "Lemons",
+        "price": 70,
+        "unit": "kg",
+        "img": "images/lemon.jpg",
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "category": "Imported Fruits",
+    "items": [
+      {
+        "id": "IF001",
+        "name": "Blueberries",
+        "price": 250,
+        "unit": "pkt",
+        "img": "images/blueberry.jpg",
+        "inStock": true
+      },
+      {
+        "id": "IF002",
+        "name": "Strawberries",
+        "price": 60,
+        "unit": "pkt",
+        "img": "images/strawberry.jpg",
+        "inStock": true
+      },
+      {
+        "id": "IF003",
+        "name": "Avocado (Hass)",
+        "price": 100,
+        "unit": "pc",
+        "img": "images/hass.jpg",
+        "inStock": true
+      },
+      {
+        "id": "IF004",
+        "name": "Kiwi (NZ)",
+        "price": 300,
+        "unit": "kg",
+        "img": "images/kiwi.jpg",
+        "inStock": true
+      },
+      {
+        "id": "IF005",
+        "name": "Apples (Washington)",
+        "price": 230,
+        "unit": "kg",
+        "img": "images/apples.jpg",
+        "inStock": true
+      },
+      {
+        "id": "IF006",
+        "name": "Dragon Fruit",
+        "price": 60,
+        "unit": "pc",
+        "img": "images/dragon.jpg",
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "category": "Daily Vegetables",
+    "items": [
+      {
+        "id": "DV001",
+        "name": "Potato",
+        "price": 16,
+        "unit": "kg",
+        "img": "images/potato.jpg",
+        "inStock": true
+      },
+      {
+        "id": "DV002",
+        "name": "Onion",
+        "price": 20,
+        "unit": "kg",
+        "img": "images/onions.jpg",
+        "inStock": true
+      },
+      {
+        "id": "DV003",
+        "name": "Tomato",
+        "price": 50,
+        "unit": "kg",
+        "img": "images/tomato.jpg",
+        "inStock": true
+      },
+      {
+        "id": "DV004",
+        "name": "Carrot",
+        "price": 35,
+        "unit": "kg",
+        "img": "images/carrot.jpg",
+        "inStock": true
+      },
+      {
+        "id": "DV005",
+        "name": "Cauliflower",
+        "price": 30,
+        "unit": "kg",
+        "img": "images/cauliflower.jpg",
+        "inStock": true
+      },
+      {
+        "id": "DV006",
+        "name": "Spinach",
+        "price": 30,
+        "unit": "kg",
+        "img": "images/spinach.jpg",
+        "inStock": true
+      },
+      {
+        "id": "DV007",
+        "name": "Ginger",
+        "price": 80,
+        "unit": "kg",
+        "img": "images/ginger.jpg",
+        "inStock": true
+      },
+      {
+        "id": "DV008",
+        "name": "Garlic",
+        "price": 120,
+        "unit": "kg",
+        "img": "images/garlic.jpg",
+        "inStock": true
+      }
+    ]
+  }
+]
