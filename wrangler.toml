@@ -1,13 +1,8 @@
-
-
 name = "freshka"
 main = "src/index.js"
 compatibility_date = "2025-12-11"
 account_id = "61b0a9ad56964648a9b3a10e165c9e92"
 workers_dev = true
 
-# include static assets from public/
 [assets]
 directory = "./public"
-
-
